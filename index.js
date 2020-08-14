@@ -31,20 +31,36 @@ const info = [
 let minutesLeft = document.getElementById('minDisplay');
 let secondsLeft = document.getElementById('secDisplay');
 let timerDisplay = document.getElementById('showHide');
+let displayShowing = true;
 
 // total time allotted for quiz. Currently 5 minutes
 let totalTime = 300;
+let timeLeft = totalTime;
+let timeElapsed = 0;
+
+minutesLeft.textContent = totalTime / 60;
+secondsLeft.textContent = totalTime % 60;
 
 function beginQuiz() {
     // start timer, start generating questions
 }
 
 
-
-
 // change timer text color to reveal or hide it
 timerDisplay.addEventListener('click', function() {
-    
+    // if the text is showing....
+    if (displayShowing) {
+        // change text color to match background, change text of button to say 'show'
+        minutesLeft.style.opacity = 0;
+        secondsLeft.style.opacity = 0;
+        timerDisplay.textContent = 'show time';
+        displayShowing = false;
+    } else {
+        minutesLeft.style.opacity = 1;
+        secondsLeft.style.opacity = 1;
+        timerDisplay.textContent = 'hide time';
+        displayShowing = true;
+    }
 });
 
    
