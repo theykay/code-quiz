@@ -41,10 +41,12 @@ let timeElapsed = 0;
 minutesLeft.textContent = totalTime / 60;
 secondsLeft.textContent = totalTime % 60;
 
+// for each card, generate a data attribute called data-answer and set it equal to info[i][2]
+// then can check answer picked against correct answer
+
 function beginQuiz() {
     // start timer, start generating questions
 }
-
 
 // change timer text color to reveal or hide it
 timerDisplay.addEventListener('click', function() {
