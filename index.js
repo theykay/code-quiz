@@ -1,31 +1,220 @@
+// array of objects containing question, answers, correct answer
+// question/answer inspiration from https://quizlet.com/117039332/javascript-quiz-flash-cards/
+// and https://quizlet.com/314467748/w3schools-javascript-quiz-flash-cards/
 let info = [
-    // array of arrays
-    // each array contains: question, possible answers (another array), correct answer
-    ['question 1', ['a', 'b', 'c', 'd'], 'a'],
-    ['question 2', ['a', 'b', 'c', 'd'], 'b'],
-    ['question 3', ['a', 'b', 'c', 'd'], 'c'],
-    ['question 4', ['a', 'b', 'c', 'd'], 'd'],
-    ['question 5', ['a', 'b', 'c', 'd'], 'a'],
-    ['question 6', ['a', 'b', 'c', 'd'], 'b'],
-    ['question 7', ['a', 'b', 'c', 'd'], 'c'],
-    ['question 8', ['a', 'b', 'c', 'd'], 'd'],
-    ['question 9', ['a', 'b', 'c', 'd'], 'a'],
-    ['question 10', ['a', 'b', 'c', 'd'], 'b'],
-    ['question 11', ['a', 'b', 'c', 'd'], 'c'],
-    ['question 12', ['a', 'b', 'c', 'd'], 'd'],
-    ['question 13', ['a', 'b', 'c', 'd'], 'a'],
-    ['question 14', ['a', 'b', 'c', 'd'], 'b'],
-    ['question 15', ['a', 'b', 'c', 'd'], 'c'],
-    ['question 16', ['a', 'b', 'c', 'd'], 'd'],
-    ['question 17', ['a', 'b', 'c', 'd'], 'a'],
-    ['question 18', ['a', 'b', 'c', 'd'], 'b'],
-    ['question 19', ['a', 'b', 'c', 'd'], 'c'],
-    ['question 20', ['a', 'b', 'c', 'd'], 'd'],
-    ['question 21', ['a', 'b', 'c', 'd'], 'a'],
-    ['question 22', ['a', 'b', 'c', 'd'], 'b'],
-    ['question 23', ['a', 'b', 'c', 'd'], 'c'],
-    ['question 24', ['a', 'b', 'c', 'd'], 'd'],
-    ['question 25', ['a', 'b', 'c', 'd'], 'a']
+    {
+        question: 'Inside which HTML element do we put the JavaScript?',
+        answers: [
+            '\<javascript\>',
+            '\<js\>',
+            '\<script\>',
+            '\<scripting\>'
+        ],
+        correct: '\<script\>'
+    },
+    {
+        question: 'Where is the correct place to insert the JavaScript?',
+        answers: [
+            'In the \<head\> section',
+            'In the \<body\> section',
+            'Both \<head\> and \<body\> section are correct',
+            'Both \<head\> and \<body\> are correct, but best practice is at the end of the \<body\>'
+        ],
+        correct: 'Both \<head\> and \<body\> are correct, but best practice is at the end of the \<body\>'
+    },
+    {
+        question:'What is the best syntax for referring to an external script called xxx.js?',
+        answers: [
+            '\<script src=\'\.\/xxx.js\'\>',
+            '\<script name=\'xxx.js\'\>',
+            '\<script href=\'xxx.js\'\>',
+            '\<script src=\'xxx.js\'\>'
+        ],
+        correct: '\<script src=\'\.\/xxx.js\'\>'
+    },
+    {
+        question:'An external JavaScript must contain the \<script\> tag',
+        answers: [
+            'true',
+            'false'
+        ],
+        correct: 'false'
+    },
+    {
+        question:'How do you create a function titled \'myFunction\'\?',
+        answers: [
+            'function\:myFunction()',
+            'function\=myFunction()',
+            'function myFunction()',
+            'function\.myFunction()'
+        ],
+        correct: 'function myFunction()'
+    },
+    {
+        question: 'How do you call a function called \'myFunction\'\?',
+        answers: [
+            'call myFunction()',
+            'myFunction()',
+            'call\.myFunction',
+            'function myFunction()'
+        ],
+        correct: 'myFunction()',
+    },
+    {
+        question:'How do you write a conditional statement for executing some statements only if a variable \'i\' is equal to 5\?',
+        answers: [
+            'if i\=\=5 then',
+            'if \(i\=5\)',
+            'if \(i\=\=5\)',
+            'if i\=5'
+        ],
+        correct: 'if \(i\=\=5\)'
+    },
+    {
+        question: 'How do you add a comment in a JavaScript?',
+        answers: [
+            '\<\!\-\-comment\-\-\>',
+            '\*\*comment',
+            '\/\/ comment',
+            '\(\(comment\)\)'
+        ],
+        correct: '\/\/ comment'
+    },
+    {
+        question: 'What is a correct way to declare an array called \'myArray\' containing the elements \'red\'\, \'yellow\'\, \'blue\'?',
+        answers: [
+            'let myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]',
+            'array myArray = \'red\'\,\'yellow\'\,\'blue\'',
+            'let myArray = array\(red\, yellow\, blue\)',
+            'myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]'
+        ],
+        correct: 'let myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]'
+    },
+    {
+        question:'A named element in JavaScript that is used to store and retrieve data from is a\:',
+        answers: [
+            'method',
+            'assignment operator',
+            'variable',
+            'string'
+        ],
+        correct: 'variable'
+    },
+    {
+        question:'How would you show the message \'hello world\' in an alert box?',
+        answers: [
+            'alert = \'hello world\'',
+            'alert.text\(\'hello world\'\)',
+            'alert(\'hello world\')',
+            'show.alert(\'hello world\')'
+        ],
+        correct: 'alert(\'hello world\')'
+    },
+    {
+        question:'What method do you use to react to a user clicking on an element?',
+        answers: [
+            'addEventListener()',
+            '\'click\'',
+            'click()',
+            '\'addEventListener\''
+        ],
+        correct: 'addEventListener()'
+    },
+    {
+        question: 'Which of the following can be stored in variables?',
+        answers: [
+            'strings, numbers, booleans',
+            'arrays, objects',
+            'all of the above',
+            'none of the above'
+        ],
+        correct: 'all of the above'
+    },
+    {
+        question: 'Which operator is not valid when comparing two variables?',
+        answers: [
+            '\!\=',
+            '\=\=',
+            '\=',
+            '\>\='
+        ],
+        correct: '\='
+    },
+    {
+        question:'What is a good, noninvasive method to use to check that your code is working at various points?',
+        answers: [
+            'console.log()',
+            'alert()',
+            'prompt()',
+            'isThisWorking()'
+        ],
+        correct: 'console.log()'
+    },
+    {
+        question:'the answer is a',
+        answers: [
+            'a',
+            'b',
+            'c',
+            '4'
+        ],
+        correct: 'a'
+    },
+    {
+        question:'the answer is 1',
+        answers: [
+            '1',
+            '2',
+            '3',
+            'd'
+        ],
+        correct: '1'
+    },
+    {
+        question: 'the answer is soon',
+        answers: [
+            'soon',
+            'early',
+            'late',
+            'now'
+        ],
+        correct: 'soon'
+    },
+    {
+        question:'1',
+        answers: ['1','2','3','4'],
+        correct: '1'
+    },
+    {
+        question: '2',
+        answers: ['1','2','3','4'],
+        correct: '2'
+    },
+    {
+        question:'3',
+        answers: ['1','2','3','4'],
+        correct: '3'
+    },
+    {
+        question: '4',
+        answers: ['1','2','3','4'],
+        correct: '4'
+    },
+    {
+        question:'a',
+        answers: ['a','b','c','d'],
+        correct: 'a'
+    },
+    {
+        question:'b',
+        answers: ['a','b','c','d'],
+        correct: 'b'
+    },
+    {
+        question:'c',
+        answers: ['a','b','c','d'],
+        correct: 'c'
+    }
 ];
 
 let minutesLeft = document.getElementById('minDisplay');
@@ -158,24 +347,26 @@ function quizzing(event) {
         // add question
         let cardQuestion = document.createElement('p');
         cardQuestion.setAttribute('class', 'card-text');
-        cardQuestion.textContent = info[randomIndex][0];
+        cardQuestion.textContent = info[randomIndex].question;
         cardBody.appendChild(cardQuestion);
 
         // add list to display answers
         let answers = document.createElement('ul');
+        answers.setAttribute('class', 'answers');
         cardBody.appendChild(answers);
 
         // add choices for answer
-        for (let j = 0; j < info[randomIndex][1].length; j++) {
+        for (let j = 0; j < info[randomIndex].answers.length; j++) {
             let option = document.createElement('li');
-            option.textContent = info[randomIndex][1][j];
+            option.textContent = info[randomIndex].answers[j];
             answers.appendChild(option);
         };
 
         // add event listener to check answers when li element is clicked
-        document.querySelector('li').addEventListener('click', function(event) {
-            if (event.currentTarget.textContent === info[randomIndex][2]) {
+        document.querySelector('ul').addEventListener('click', function(event) {
+            if (event.target.textContent === info[randomIndex].correct) {
                 // card flash green, move on to next question
+                
             } else {
                 // card flash red
                 // strike through 
