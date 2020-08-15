@@ -242,6 +242,7 @@ startButton.addEventListener('click', function () {
     document.getElementById('card').removeChild(startButton);
     startTimer();
     renderTime();
+    renderScore();
     generateContent();
 });
 
@@ -373,7 +374,20 @@ function generateContent() {
     };
     // remove question from array
     info.splice(randomIndex, 1);
-}
+};
+
+function clearContent() {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
+    while (document.getElementById('card').firstChild) {
+        document.getElementById('card').removeChild(document.getElementById('card').firstChild);
+    }
+};
+
+// call function when time is out or question array is empty
+function enterName() {
+    let userName = prompt('Enter name to record score: ');
+    localStorage.setItem(userName, score);
+};
 
 // add event listener; if correct, add to score, clear div and run generateContent()
 // if incorrect, adjust score and time
