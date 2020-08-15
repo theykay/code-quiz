@@ -238,9 +238,8 @@ let startButton = document.getElementById('startQuiz');
 initialize();
 
 startButton.addEventListener('click', function () {
-    document.getElementById('card').removeChild(startButton);
-    // start timer, start generating questions
     initialize();
+    document.getElementById('card').removeChild(startButton);
     startTimer();
     renderTime();
     generateContent();
@@ -265,12 +264,12 @@ timerDisplay.addEventListener('click', function () {
 });
 
 function initialize() {
-    document.getElementById('card')
+    document.getElementById('card').appendChild(startButton);
     timeElapsed = 0;
     displayShowing = true;
     score = 0;
     renderTime();
-
+    document.getElementById
     clearInterval(interval);
 };
 
@@ -311,7 +310,7 @@ function renderTime() {
 };
 
 function renderScore() {
-    document.querySelector('.score').textContent = score;
+    document.querySelector('.score').textContent = 'Score: ' + score;
 };
 
 function startTimer() {
@@ -334,7 +333,7 @@ function generateContent() {
     // make card with question and answers
     let cardBody = document.createElement('div');
     cardBody.setAttribute('class', 'card-body');
-    
+
     // put correct answer in data aspect of container div
     document.getElementById('card').setAttribute('data-correct', info[randomIndex].correct);
     document.getElementById('card').appendChild(cardBody);
