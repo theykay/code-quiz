@@ -40,9 +40,6 @@ let interval;
 
 let startButton = document.getElementById('startQuiz');
 
-let questionCard = document.createElement('div');
-questionCard.setAttribute('class', 'card-body');
-
 // for each card, generate a data attribute called data-answer and set it equal to info[i][2]
 // then can check answer picked against correct answer
 
@@ -140,22 +137,54 @@ function quizzing(event) {
     // click event listener for li elements: if content of li matches element at info[randomNumber][2], end this iteration of loop. Else if wrong, subtract X seconds from time
     // remove element at info[randomNumber]
     // **
+
+    let cardBody = document.createElement('div');
+    cardBody.setAttribute('class', 'card-body');
+    document.getElementById('card').appendChild(cardBody);
+
+    let counter = 0;
+    
     for (let i = 0; i < info.length;) {
+        // display question number
+        counter++;
+        let cardTitle = document.createElement('h5');
+        cardTitle.setAttribute('class', 'card-title');
+        cardTitle.textContent = 'Question ' + counter + ' of 25';
+        cardBody.appendChild(cardTitle);
+       
+        // get random index of questions array
         let randomIndex = Math.floor(Math.random()*info.length);
+
         // add question
-        questionCard.textContent = info[randomIndex][0];
+        let cardQuestion = document.createElement('p');
+        cardQuestion.setAttribute('class', 'card-text');
+        cardQuestion.textContent = info[randomIndex][0];
+        cardBody.appendChild(cardQuestion);
+
+        // add list to display answers
         let answers = document.createElement('ul');
-        questionCard.appendChild(answers);
+        cardBody.appendChild(answers);
+
         // add choices for answer
         for (let j = 0; j < info[randomIndex][1].length; j++) {
             let option = document.createElement('li');
             option.textContent = info[randomIndex][1][j];
             answers.appendChild(option);
-        }
-        // add event listener to check answers when li element is clicked
+        };
 
+        // add event listener to check answers when li element is clicked
+        document.querySelector('li').addEventListener('click', function(event) {
+            if (event.currentTarget.textContent === info[randomIndex][2]) {
+                // card flash green, move on to next question
+            } else {
+                // card flash red
+                // strike through 
+                event.currentTarget.style.textDecoration = 'line-through';
+
+            }
+        });
         
-        // at end of loop, remove question from array
+        // at end of each loop, remove question from array
         info.splice(randomIndex, 1);
     }
 
