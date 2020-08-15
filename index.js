@@ -23,7 +23,7 @@ let info = [
         correct: 'Both \<head\> and \<body\> are correct, but best practice is at the end of the \<body\>'
     },
     {
-        question:'What is the best syntax for referring to an external script called xxx.js?',
+        question: 'What is the best syntax for referring to an external script called xxx.js?',
         answers: [
             '\<script src=\'\.\/xxx.js\'\>',
             '\<script name=\'xxx.js\'\>',
@@ -33,7 +33,7 @@ let info = [
         correct: '\<script src=\'\.\/xxx.js\'\>'
     },
     {
-        question:'An external JavaScript must contain the \<script\> tag',
+        question: 'An external JavaScript must contain the \<script\> tag',
         answers: [
             'true',
             'false'
@@ -41,7 +41,7 @@ let info = [
         correct: 'false'
     },
     {
-        question:'How do you create a function titled \'myFunction\'\?',
+        question: 'How do you create a function titled \'myFunction\'\?',
         answers: [
             'function\:myFunction()',
             'function\=myFunction()',
@@ -61,7 +61,7 @@ let info = [
         correct: 'myFunction()',
     },
     {
-        question:'How do you write a conditional statement for executing some statements only if a variable \'i\' is equal to 5\?',
+        question: 'How do you write a conditional statement for executing some statements only if a variable \'i\' is equal to 5\?',
         answers: [
             'if i\=\=5 then',
             'if \(i\=5\)',
@@ -91,7 +91,7 @@ let info = [
         correct: 'let myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]'
     },
     {
-        question:'A named element in JavaScript that is used to store and retrieve data from is a\:',
+        question: 'A named element in JavaScript that is used to store and retrieve data from is a\:',
         answers: [
             'method',
             'assignment operator',
@@ -101,7 +101,7 @@ let info = [
         correct: 'variable'
     },
     {
-        question:'How would you show the message \'hello world\' in an alert box?',
+        question: 'How would you show the message \'hello world\' in an alert box?',
         answers: [
             'alert = \'hello world\'',
             'alert.text\(\'hello world\'\)',
@@ -111,7 +111,7 @@ let info = [
         correct: 'alert(\'hello world\')'
     },
     {
-        question:'What method do you use to react to a user clicking on an element?',
+        question: 'What method do you use to react to a user clicking on an element?',
         answers: [
             'addEventListener()',
             '\'click\'',
@@ -141,7 +141,7 @@ let info = [
         correct: '\='
     },
     {
-        question:'What is a good, noninvasive method to use to check that your code is working at various points?',
+        question: 'What is a good, noninvasive method to use to check that your code is working at various points?',
         answers: [
             'console.log()',
             'alert()',
@@ -151,7 +151,7 @@ let info = [
         correct: 'console.log()'
     },
     {
-        question:'the answer is a',
+        question: 'the answer is a',
         answers: [
             'a',
             'b',
@@ -161,7 +161,7 @@ let info = [
         correct: 'a'
     },
     {
-        question:'the answer is 1',
+        question: 'the answer is 1',
         answers: [
             '1',
             '2',
@@ -181,38 +181,38 @@ let info = [
         correct: 'soon'
     },
     {
-        question:'1',
-        answers: ['1','2','3','4'],
+        question: '1',
+        answers: ['1', '2', '3', '4'],
         correct: '1'
     },
     {
         question: '2',
-        answers: ['1','2','3','4'],
+        answers: ['1', '2', '3', '4'],
         correct: '2'
     },
     {
-        question:'3',
-        answers: ['1','2','3','4'],
+        question: '3',
+        answers: ['1', '2', '3', '4'],
         correct: '3'
     },
     {
         question: '4',
-        answers: ['1','2','3','4'],
+        answers: ['1', '2', '3', '4'],
         correct: '4'
     },
     {
-        question:'a',
-        answers: ['a','b','c','d'],
+        question: 'a',
+        answers: ['a', 'b', 'c', 'd'],
         correct: 'a'
     },
     {
-        question:'b',
-        answers: ['a','b','c','d'],
+        question: 'b',
+        answers: ['a', 'b', 'c', 'd'],
         correct: 'b'
     },
     {
-        question:'c',
-        answers: ['a','b','c','d'],
+        question: 'c',
+        answers: ['a', 'b', 'c', 'd'],
         correct: 'c'
     }
 ];
@@ -227,6 +227,9 @@ const totalTime = 15;
 let timeElapsed = 0;
 let interval;
 
+let questionNumber = 0;
+let score = 0;
+
 let startButton = document.getElementById('startQuiz');
 
 // for each card, generate a data attribute called data-answer and set it equal to info[i][2]
@@ -240,7 +243,7 @@ startButton.addEventListener('click', function () {
     initialize();
     startTimer();
     renderTime();
-    quizzing();
+    generateContent();
 });
 
 // change timer text opacity to reveal or hide it
@@ -262,9 +265,12 @@ timerDisplay.addEventListener('click', function () {
 });
 
 function initialize() {
+    document.getElementById('card')
     timeElapsed = 0;
     displayShowing = true;
+    score = 0;
     renderTime();
+
     clearInterval(interval);
 };
 
@@ -304,6 +310,10 @@ function renderTime() {
     }
 };
 
+function renderScore() {
+    document.querySelector('.score').textContent = score;
+};
+
 function startTimer() {
     interval = setInterval(function () {
         timeElapsed++;
@@ -318,66 +328,81 @@ function quizEnd() {
     initialize();
 };
 
-function quizzing(event) {
-    // repeat between ** until info array is empty
-    // **
-    // get random number based on length of info array
-    // populate div with question at info[randomNumber][0] and answers (ul) from info[randomNumber][1]
-    // click event listener for li elements: if content of li matches element at info[randomNumber][2], end this iteration of loop. Else if wrong, subtract X seconds from time
-    // remove element at info[randomNumber]
-    // **
-
+function generateContent() {
+    let randomIndex = Math.floor(Math.random() * info.length);
+    
+    // make card with question and answers
     let cardBody = document.createElement('div');
     cardBody.setAttribute('class', 'card-body');
+    
+    // put correct answer in data aspect of container div
+    document.getElementById('card').setAttribute('data-correct', info[randomIndex].correct);
     document.getElementById('card').appendChild(cardBody);
 
-    let counter = 0;
-    
-    for (let i = 0; i < info.length;) {
-        // display question number
-        counter++;
-        let cardTitle = document.createElement('h5');
-        cardTitle.setAttribute('class', 'card-title');
-        cardTitle.textContent = 'Question ' + counter + ' of 25';
-        cardBody.appendChild(cardTitle);
-       
-        // get random index of questions array
-        let randomIndex = Math.floor(Math.random()*info.length);
+    // display question number
+    questionNumber++;
+    let cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', 'card-title');
+    cardTitle.textContent = 'Question ' + questionNumber + ' of 25';
+    cardBody.appendChild(cardTitle);
 
-        // add question
-        let cardQuestion = document.createElement('p');
-        cardQuestion.setAttribute('class', 'card-text');
-        cardQuestion.textContent = info[randomIndex].question;
-        cardBody.appendChild(cardQuestion);
+    // add question
+    let cardQuestion = document.createElement('p');
+    cardQuestion.setAttribute('class', 'card-text');
+    cardQuestion.textContent = info[randomIndex].question;
+    cardBody.appendChild(cardQuestion);
 
-        // add list to display answers
-        let answers = document.createElement('ul');
-        answers.setAttribute('class', 'answers');
-        cardBody.appendChild(answers);
+    // add list to display answers
+    let answers = document.createElement('ul');
+    answers.setAttribute('class', 'answers');
+    // answers.setAttribute('id', info[randomIndex].correct);
+    cardBody.appendChild(answers);
 
-        // add choices for answer
-        for (let j = 0; j < info[randomIndex].answers.length; j++) {
-            let option = document.createElement('li');
-            option.textContent = info[randomIndex].answers[j];
-            answers.appendChild(option);
-        };
+    // shuffle answers
+    for (let j = info[randomIndex].answers.length - 1; j > 0; j--) {
+        const k = Math.floor(Math.random() * j);
+        const temp = info[randomIndex].answers[j];
+        info[randomIndex].answers[j] = info[randomIndex].answers[k];
+        info[randomIndex].answers[k] = temp;
+    };
 
-        // add event listener to check answers when li element is clicked
-        document.querySelector('ul').addEventListener('click', function(event) {
-            if (event.target.textContent === info[randomIndex].correct) {
-                // card flash green, move on to next question
-                
+    // add answers to card
+    for (let m = 0; m < info[randomIndex].answers.length; m++) {
+        let option = document.createElement('li');
+        option.textContent = info[randomIndex].answers[m];
+        answers.appendChild(option);
+    };
+    // remove question from array
+    info.splice(randomIndex, 1);
+}
+
+// add event listener; if correct, add to score, clear div and run generateContent()
+// if incorrect, adjust score and time
+//let correct = false;
+document.getElementById('card').addEventListener('click', function (event) {
+    let whichTry = 1;
+    if (event.target.tagName === 'LI') {
+        if (event.target.textContent === event.currentTarget.getAttribute('data-correct')) {
+            if (whichTry === 1) {
+                score += 4;
+            } else if (whichTry === 2) {
+                score += 3;
+            } else if (whichTry === 3) {
+                score += 2;
             } else {
-                // card flash red
-                // strike through 
-                event.currentTarget.style.textDecoration = 'line-through';
-
+                score += 1;
             }
-        });
-        
-        // at end of each loop, remove question from array
-        info.splice(randomIndex, 1);
+            renderScore();
+            //correct = true;
+            clearContent();
+            generateContent();
+        } else {
+            // strike through
+            // lose 5 seconds 
+            event.target.style.textDecoration = 'line-through';
+            timeElapsed += 5;
+            whichTry++;
+        }
     }
-
-};
+});
 
