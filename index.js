@@ -33,23 +33,26 @@ let secondsLeft = document.getElementById('secDisplay');
 let timerDisplay = document.getElementById('showHide');
 let displayShowing = true;
 
-// total time allotted for quiz. Currently 5 minutes
-let totalTime = 300;
-let timeLeft = totalTime;
+// total time allotted for quiz
+const totalTime = 10;
 let timeElapsed = 0;
 let interval;
 
-let startButton = document.createElement('button');
-startButton.innerText = 'begin quiz';
+let startButton = document.getElementById('startQuiz');
 
 // for each card, generate a data attribute called data-answer and set it equal to info[i][2]
 // then can check answer picked against correct answer
 
 initialize();
 
-startButton.addEventListener('click', beginQuiz());
+startButton.addEventListener('click', function() {
+    document.getElementById('card').removeChild(startButton);
+    // start timer, start generating questions
+    startTimer();
+    renderTime();
+});
 
-// change timer text color to reveal or hide it
+// change timer text opacity to reveal or hide it
 timerDisplay.addEventListener('click', function () {
     // if the text is showing....
     if (displayShowing) {
@@ -67,11 +70,9 @@ timerDisplay.addEventListener('click', function () {
 });
 
 function initialize() {
-    totalTime = 300;
-    timeLeft = totalTime;
     timeElapsed = 0;
     displayShowing = true;
-    document.getElementById('card').appendChild(startButton);
+    renderTime();
     clearInterval(interval);
 };
 
@@ -106,6 +107,9 @@ function formatSeconds() {
 function renderTime() {
     minutesLeft.textContent = formatMinutes();
     secondsLeft.textContent = formatSeconds();
+    if (timeElapsed >= totalTime) {
+        quizEnd();
+    }
 };
 
 function startTimer() {
@@ -115,11 +119,18 @@ function startTimer() {
     }, 1000);
 };
 
-function beginQuiz() {
-    // start timer, start generating questions
-    startTimer();
+// function beginQuiz() {
 
-};
+//     document.getElementById('card').removeChild(startButton);
+//     // start timer, start generating questions
+//     startTimer();
+//     renderTime();
+// };
 
-
+function quizEnd() {
+    minutesLeft.textContent = '00';
+    secondsLeft.textContent = '00';
+    clearInterval(interval);
+    document.getElementById('card').appendChild(startButton);
+}
 
