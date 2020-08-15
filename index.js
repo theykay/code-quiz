@@ -34,7 +34,7 @@ let timerDisplay = document.getElementById('showHide');
 let displayShowing = true;
 
 // total time allotted for quiz
-const totalTime = 10;
+const totalTime = 15;
 let timeElapsed = 0;
 let interval;
 
@@ -45,9 +45,10 @@ let startButton = document.getElementById('startQuiz');
 
 initialize();
 
-startButton.addEventListener('click', function() {
+startButton.addEventListener('click', function () {
     document.getElementById('card').removeChild(startButton);
     // start timer, start generating questions
+    initialize();
     startTimer();
     renderTime();
 });
@@ -55,18 +56,19 @@ startButton.addEventListener('click', function() {
 // change timer text opacity to reveal or hide it
 timerDisplay.addEventListener('click', function () {
     // if the text is showing....
-    if (displayShowing) {
+    if (!displayShowing) {
         // change text color to match background, change text of button to say 'show'
-        minutesLeft.style.opacity = 0;
-        secondsLeft.style.opacity = 0;
-        timerDisplay.textContent = 'show time';
-        displayShowing = false;
-    } else {
         minutesLeft.style.opacity = 1;
         secondsLeft.style.opacity = 1;
         timerDisplay.textContent = 'hide time';
         displayShowing = true;
+    } else {
+        minutesLeft.style.opacity = 0;
+        secondsLeft.style.opacity = 0;
+        timerDisplay.textContent = 'show time';
+        displayShowing = false;
     }
+
 });
 
 function initialize() {
@@ -92,17 +94,17 @@ function formatMinutes() {
 
 function formatSeconds() {
     let secondsLeft = (totalTime - timeElapsed) % 60;
-  
+
     let formattedSeconds;
-  
+
     if (secondsLeft < 10) {
-      formattedSeconds = "0" + secondsLeft;
+        formattedSeconds = "0" + secondsLeft;
     } else {
-      formattedSeconds = secondsLeft;
+        formattedSeconds = secondsLeft;
     }
-  
+
     return formattedSeconds;
-  };
+};
 
 function renderTime() {
     minutesLeft.textContent = formatMinutes();
@@ -113,7 +115,7 @@ function renderTime() {
 };
 
 function startTimer() {
-    interval = setInterval(function() {
+    interval = setInterval(function () {
         timeElapsed++;
         renderTime();
     }, 1000);
@@ -128,9 +130,9 @@ function startTimer() {
 // };
 
 function quizEnd() {
-    minutesLeft.textContent = '00';
-    secondsLeft.textContent = '00';
-    clearInterval(interval);
+    // minutesLeft.textContent = '00';
+    // secondsLeft.textContent = '00';
     document.getElementById('card').appendChild(startButton);
-}
+    initialize();
+};
 
