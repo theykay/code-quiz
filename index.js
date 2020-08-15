@@ -1,4 +1,4 @@
-const info = [
+let info = [
     // array of arrays
     // each array contains: question, possible answers (another array), correct answer
     ['question 1', ['a', 'b', 'c', 'd'], 'a'],
@@ -40,6 +40,9 @@ let interval;
 
 let startButton = document.getElementById('startQuiz');
 
+let questionCard = document.createElement('div');
+questionCard.setAttribute('class', 'card-body');
+
 // for each card, generate a data attribute called data-answer and set it equal to info[i][2]
 // then can check answer picked against correct answer
 
@@ -51,6 +54,7 @@ startButton.addEventListener('click', function () {
     initialize();
     startTimer();
     renderTime();
+    quizzing();
 });
 
 // change timer text opacity to reveal or hide it
@@ -121,18 +125,39 @@ function startTimer() {
     }, 1000);
 };
 
-// function beginQuiz() {
-
-//     document.getElementById('card').removeChild(startButton);
-//     // start timer, start generating questions
-//     startTimer();
-//     renderTime();
-// };
-
 function quizEnd() {
     // minutesLeft.textContent = '00';
     // secondsLeft.textContent = '00';
     document.getElementById('card').appendChild(startButton);
     initialize();
+};
+
+function quizzing(event) {
+    // repeat between ** until info array is empty
+    // **
+    // get random number based on length of info array
+    // populate div with question at info[randomNumber][0] and answers (ul) from info[randomNumber][1]
+    // click event listener for li elements: if content of li matches element at info[randomNumber][2], end this iteration of loop. Else if wrong, subtract X seconds from time
+    // remove element at info[randomNumber]
+    // **
+    for (let i = 0; i < info.length;) {
+        let randomIndex = Math.floor(Math.random()*info.length);
+        // add question
+        questionCard.textContent = info[randomIndex][0];
+        let answers = document.createElement('ul');
+        questionCard.appendChild(answers);
+        // add choices for answer
+        for (let j = 0; j < info[randomIndex][1].length; j++) {
+            let option = document.createElement('li');
+            option.textContent = info[randomIndex][1][j];
+            answers.appendChild(option);
+        }
+        // add event listener to check answers when li element is clicked
+
+        
+        // at end of loop, remove question from array
+        info.splice(randomIndex, 1);
+    }
+
 };
 
