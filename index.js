@@ -223,7 +223,7 @@ let timerDisplay = document.getElementById('showHide');
 let displayShowing = true;
 
 // total time allotted for quiz
-const totalTime = 15;
+const totalTime = 150;
 let timeElapsed = 0;
 let interval;
 
@@ -231,19 +231,34 @@ let questionNumber = 0;
 let score = 0;
 
 let startButton = document.getElementById('startQuiz');
+let scoreButton = document.getElementById('scores');
 
 // for each card, generate a data attribute called data-answer and set it equal to info[i][2]
 // then can check answer picked against correct answer
 
+// scores only persist until page is refreshed
+localStorage.clear();
 initialize();
 
+// start quiz
 startButton.addEventListener('click', function () {
     initialize();
     document.getElementById('card').removeChild(startButton);
+    document.getElementById('card').removeChild(scoreButton);
     startTimer();
     renderTime();
     renderScore();
     generateContent();
+});
+
+scoreButton.addEventListener('click', function () {
+    if (localStorage.length > 0) {
+        console.log(localStorage);
+        //document.getElementById('card').appendChild()
+    } else {
+        alert('no scores saved');
+    }
+
 });
 
 // change timer text opacity to reveal or hide it
@@ -265,10 +280,228 @@ timerDisplay.addEventListener('click', function () {
 });
 
 function initialize() {
+    clearContent();
     document.getElementById('card').appendChild(startButton);
+    document.getElementById('card').appendChild(scoreButton);
+    info = [
+        {
+            question: 'Inside which HTML element do we put the JavaScript?',
+            answers: [
+                '\<javascript\>',
+                '\<js\>',
+                '\<script\>',
+                '\<scripting\>'
+            ],
+            correct: '\<script\>'
+        },
+        {
+            question: 'Where is the correct place to insert the JavaScript?',
+            answers: [
+                'In the \<head\> section',
+                'In the \<body\> section',
+                'Both \<head\> and \<body\> section are correct',
+                'Both \<head\> and \<body\> are correct, but best practice is at the end of the \<body\>'
+            ],
+            correct: 'Both \<head\> and \<body\> are correct, but best practice is at the end of the \<body\>'
+        },
+        {
+            question: 'What is the best syntax for referring to an external script called xxx.js?',
+            answers: [
+                '\<script src=\'\.\/xxx.js\'\>',
+                '\<script name=\'xxx.js\'\>',
+                '\<script href=\'xxx.js\'\>',
+                '\<script src=\'xxx.js\'\>'
+            ],
+            correct: '\<script src=\'\.\/xxx.js\'\>'
+        },
+        {
+            question: 'An external JavaScript must contain the \<script\> tag',
+            answers: [
+                'true',
+                'false'
+            ],
+            correct: 'false'
+        },
+        {
+            question: 'How do you create a function titled \'myFunction\'\?',
+            answers: [
+                'function\:myFunction()',
+                'function\=myFunction()',
+                'function myFunction()',
+                'function\.myFunction()'
+            ],
+            correct: 'function myFunction()'
+        },
+        {
+            question: 'How do you call a function called \'myFunction\'\?',
+            answers: [
+                'call myFunction()',
+                'myFunction()',
+                'call\.myFunction',
+                'function myFunction()'
+            ],
+            correct: 'myFunction()',
+        },
+        {
+            question: 'How do you write a conditional statement for executing some statements only if a variable \'i\' is equal to 5\?',
+            answers: [
+                'if i\=\=5 then',
+                'if \(i\=5\)',
+                'if \(i\=\=5\)',
+                'if i\=5'
+            ],
+            correct: 'if \(i\=\=5\)'
+        },
+        {
+            question: 'How do you add a comment in a JavaScript?',
+            answers: [
+                '\<\!\-\-comment\-\-\>',
+                '\*\*comment',
+                '\/\/ comment',
+                '\(\(comment\)\)'
+            ],
+            correct: '\/\/ comment'
+        },
+        {
+            question: 'What is a correct way to declare an array called \'myArray\' containing the elements \'red\'\, \'yellow\'\, \'blue\'?',
+            answers: [
+                'let myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]',
+                'array myArray = \'red\'\,\'yellow\'\,\'blue\'',
+                'let myArray = array\(red\, yellow\, blue\)',
+                'myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]'
+            ],
+            correct: 'let myArray = \[\'red\'\,\'yellow\'\,\'blue\'\]'
+        },
+        {
+            question: 'A named element in JavaScript that is used to store and retrieve data from is a\:',
+            answers: [
+                'method',
+                'assignment operator',
+                'variable',
+                'string'
+            ],
+            correct: 'variable'
+        },
+        {
+            question: 'How would you show the message \'hello world\' in an alert box?',
+            answers: [
+                'alert = \'hello world\'',
+                'alert.text\(\'hello world\'\)',
+                'alert(\'hello world\')',
+                'show.alert(\'hello world\')'
+            ],
+            correct: 'alert(\'hello world\')'
+        },
+        {
+            question: 'What method do you use to react to a user clicking on an element?',
+            answers: [
+                'addEventListener()',
+                '\'click\'',
+                'click()',
+                '\'addEventListener\''
+            ],
+            correct: 'addEventListener()'
+        },
+        {
+            question: 'Which of the following can be stored in variables?',
+            answers: [
+                'strings, numbers, booleans',
+                'arrays, objects',
+                'all of the above',
+                'none of the above'
+            ],
+            correct: 'all of the above'
+        },
+        {
+            question: 'Which operator is not valid when comparing two variables?',
+            answers: [
+                '\!\=',
+                '\=\=',
+                '\=',
+                '\>\='
+            ],
+            correct: '\='
+        },
+        {
+            question: 'What is a good, noninvasive method to use to check that your code is working at various points?',
+            answers: [
+                'console.log()',
+                'alert()',
+                'prompt()',
+                'isThisWorking()'
+            ],
+            correct: 'console.log()'
+        },
+        {
+            question: 'the answer is a',
+            answers: [
+                'a',
+                'b',
+                'c',
+                '4'
+            ],
+            correct: 'a'
+        },
+        {
+            question: 'the answer is 1',
+            answers: [
+                '1',
+                '2',
+                '3',
+                'd'
+            ],
+            correct: '1'
+        },
+        {
+            question: 'the answer is soon',
+            answers: [
+                'soon',
+                'early',
+                'late',
+                'now'
+            ],
+            correct: 'soon'
+        },
+        {
+            question: '1',
+            answers: ['1', '2', '3', '4'],
+            correct: '1'
+        },
+        {
+            question: '2',
+            answers: ['1', '2', '3', '4'],
+            correct: '2'
+        },
+        {
+            question: '3',
+            answers: ['1', '2', '3', '4'],
+            correct: '3'
+        },
+        {
+            question: '4',
+            answers: ['1', '2', '3', '4'],
+            correct: '4'
+        },
+        {
+            question: 'a',
+            answers: ['a', 'b', 'c', 'd'],
+            correct: 'a'
+        },
+        {
+            question: 'b',
+            answers: ['a', 'b', 'c', 'd'],
+            correct: 'b'
+        },
+        {
+            question: 'c',
+            answers: ['a', 'b', 'c', 'd'],
+            correct: 'c'
+        }
+    ];
     timeElapsed = 0;
     displayShowing = true;
     score = 0;
+    questionNumber = 0;
     renderTime();
     document.getElementById
     clearInterval(interval);
@@ -306,6 +539,7 @@ function renderTime() {
     minutesLeft.textContent = formatMinutes();
     secondsLeft.textContent = formatSeconds();
     if (timeElapsed >= totalTime) {
+        alert('time is up\!');
         quizEnd();
     }
 };
@@ -324,13 +558,14 @@ function startTimer() {
 function quizEnd() {
     // minutesLeft.textContent = '00';
     // secondsLeft.textContent = '00';
-    document.getElementById('card').appendChild(startButton);
+    let userName = prompt('Enter name to record score: ');
+    localStorage.setItem(userName, score);
     initialize();
 };
 
 function generateContent() {
     let randomIndex = Math.floor(Math.random() * info.length);
-    
+
     // make card with question and answers
     let cardBody = document.createElement('div');
     cardBody.setAttribute('class', 'card-body');
@@ -385,30 +620,32 @@ function clearContent() {
 
 // call function when time is out or question array is empty
 function enterName() {
-    let userName = prompt('Enter name to record score: ');
-    localStorage.setItem(userName, score);
+
 };
 
 // add event listener; if correct, add to score, clear div and run generateContent()
 // if incorrect, adjust score and time
-//let correct = false;
 document.getElementById('card').addEventListener('click', function (event) {
     let whichTry = 1;
-    if (event.target.tagName === 'LI') {
+    if (event.target.tagName === 'LI' && timeElapsed <= totalTime) {
         if (event.target.textContent === event.currentTarget.getAttribute('data-correct')) {
-            if (whichTry === 1) {
-                score += 4;
-            } else if (whichTry === 2) {
-                score += 3;
-            } else if (whichTry === 3) {
-                score += 2;
+            if (info.length <= 0) {
+                alert('finished\!');
+                quizEnd();
             } else {
-                score += 1;
+                if (whichTry === 1) {
+                    score += 4;
+                } else if (whichTry === 2) {
+                    score += 3;
+                } else if (whichTry === 3) {
+                    score += 2;
+                } else {
+                    score += 1;
+                }
+                renderScore();
+                clearContent();
+                generateContent();
             }
-            renderScore();
-            //correct = true;
-            clearContent();
-            generateContent();
         } else {
             // strike through
             // lose 5 seconds 
