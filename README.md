@@ -1,1 +1,1 @@
-# code-quiz
+# Javascript Quiz Application
