@@ -223,7 +223,7 @@ let timerDisplay = document.getElementById('showHide');
 let displayShowing = true;
 
 // total time allotted for quiz
-const totalTime = 150;
+const totalTime = 180;
 let timeElapsed = 0;
 let interval;
 
@@ -253,22 +253,28 @@ startButton.addEventListener('click', function () {
 });
 
 scoreButton.addEventListener('click', function () {
-    initialize();
+    if (localStorage.getItem('names')) {
+        initialize();
+        // document.getElementById('card').removeChild(scoreButton);
+        let scoreNames = JSON.parse(localStorage.getItem('names'));
+        let scoreNums = JSON.parse(localStorage.getItem('nums'));
+        if (scoreNames != null) {
+            scoreNames = scoreNames;
+            scoreNums = scoreNums;
+        }
+        let scoreList = document.createElement('ul');
+        document.getElementById('card').appendChild(scoreList);
+        for (let r = 0; r < scoreNames.length; r++) {
+            let currentScore = document.createElement('li');
+            currentScore.textContent = 'Name: ' + scoreNames[r] + " Score: " + scoreNums[r];
+            scoreList.appendChild(currentScore);
+        }
+    } else {
+        let noScores = document.createElement('p');
+        noScores.textContent = 'no scores recorded yet';
+        document.getElementById('card').appendChild(noScores);
+    }
     document.getElementById('card').removeChild(scoreButton);
-    console.log(JSON.parse(localStorage.getItem('names')));
-    let scoreNames = JSON.parse(localStorage.getItem('names'));
-    let scoreNums = JSON.parse(localStorage.getItem('nums'));
-    if (scoreNames != null) {
-        scoreNames = scoreNames;
-        scoreNums = scoreNums;
-    }
-    let scoreList = document.createElement('ul');
-    document.getElementById('card').appendChild(scoreList);
-    for (let r = 0; r < scoreNames.length; r++) {
-        let currentScore = document.createElement('li');
-        currentScore.textContent = 'Name: ' + scoreNames[r] + " Score: " + scoreNums[r];
-        scoreList.appendChild(currentScore);
-    }
 });
 
 // change timer text opacity to reveal or hide it
@@ -554,6 +560,7 @@ function initialize() {
 function formatMinutes() {
     let secondsLeft = totalTime - timeElapsed;
     let minutesLeft = Math.floor(secondsLeft / 60);
+    
     // let formattedMinutes;
 
     // if (minutesLeft < 10) {
