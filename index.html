@@ -17,16 +17,22 @@
     <!-- make these divs side-by-side for large screens, make timer above question for small screen -->
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-4 timer">
+            <div class="col-12 col-sm-4 timer">
                 <div class="row">
                     <h2 id="minDisplay" class="col-6"></h2>
                     <h2 id="secDisplay" class='col-6'></h2>
+                </div>
+                <div class="row">
+                    <p class='col-6'>minutes</p>
+                    <p class="col-6">seconds</p>
+                </div>
+                <div class="row">
                     <button id="showHide">hide time</button>
                 </div>
 
                 <div class="score"></div>
             </div>
-            <div id='card' class="col-sm-12 col-md-4 card">
+            <div id='card' class="col-12 col-sm-8 card">
                 <button id="startQuiz">start quiz</button>
                 <button id="scores">view scores</button>
             </div>
