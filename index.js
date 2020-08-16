@@ -233,6 +233,9 @@ let score = 0;
 let startButton = document.getElementById('startQuiz');
 let scoreButton = document.getElementById('scores');
 
+let scoreNames = [];
+let scoreNums = [];
+
 // for each card, generate a data attribute called data-answer and set it equal to info[i][2]
 // then can check answer picked against correct answer
 
@@ -252,13 +255,22 @@ startButton.addEventListener('click', function () {
 });
 
 scoreButton.addEventListener('click', function () {
-    if (localStorage.length > 0) {
-        console.log(localStorage);
-        //document.getElementById('card').appendChild()
-    } else {
-        alert('no scores saved');
+    initialize();
+    document.getElementById('card').removeChild(scoreButton);
+    console.log(JSON.parse(localStorage.getItem('names')));
+    let scoreNames = JSON.parse(localStorage.getItem('names'));
+    let scoreNums = JSON.parse(localStorage.getItem('nums'));
+    if (scoreNames != null) {
+        scoreNames = scoreNames;
+        scoreNums = scoreNums;
     }
-
+    let scoreList = document.createElement('ul');
+    document.getElementById('card').appendChild(scoreList);
+    for (let r = 0; r < scoreNames.length; r++) {
+        let currentScore = document.createElement('li');
+        currentScore.textContent = 'Name: ' + scoreNames[r] + " Score: " + scoreNums[r];
+        scoreList.appendChild(currentScore);
+    }
 });
 
 // change timer text opacity to reveal or hide it
@@ -507,6 +519,25 @@ function initialize() {
     clearInterval(interval);
 };
 
+// function init() {
+//     // Get stored todos from localStorage
+//     // Parsing the JSON string to an object
+//     var storedTodos = JSON.parse(localStorage.getItem("todos"));
+
+//     // If todos were retrieved from localStorage, update the todos array to it
+//     if (storedTodos !== null) {
+//       todos = storedTodos;
+//     }
+
+//     // Render todos to the DOM
+//     renderTodos();
+//   }
+
+//   function storeTodos() {
+//     // Stringify and set "todos" key in localStorage to todos array
+//     localStorage.setItem("todos", JSON.stringify(todos));
+//   }
+
 function formatMinutes() {
     let secondsLeft = totalTime - timeElapsed;
     let minutesLeft = Math.floor(secondsLeft / 60);
@@ -558,8 +589,12 @@ function startTimer() {
 function quizEnd() {
     // minutesLeft.textContent = '00';
     // secondsLeft.textContent = '00';
+    alert("Your final score was: " + score);
     let userName = prompt('Enter name to record score: ');
-    localStorage.setItem(userName, score);
+    scoreNames.push(userName);
+    scoreNums.push(score);
+    localStorage.setItem('names', JSON.stringify(scoreNames));
+    localStorage.setItem('nums', JSON.stringify(scoreNums));
     initialize();
 };
 
@@ -630,6 +665,7 @@ document.getElementById('card').addEventListener('click', function (event) {
     if (event.target.tagName === 'LI' && timeElapsed <= totalTime) {
         if (event.target.textContent === event.currentTarget.getAttribute('data-correct')) {
             if (info.length <= 0) {
+                renderScore();
                 alert('finished\!');
                 quizEnd();
             } else {
