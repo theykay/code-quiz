@@ -15,18 +15,35 @@
 
 <body>
     <!-- make these divs side-by-side for large screens, make timer above question for small screen -->
-    <div class="timer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 timer">
+                <div class="row">
+                    <h2 id="minDisplay" class="col-6"></h2>
+                    <h2 id="secDisplay" class='col-6'></h2>
+                    <button id="showHide">hide time</button>
+                </div>
+
+                <div class="score"></div>
+            </div>
+            <div id='card' class="col-sm-12 col-md-4 card">
+                <button id="startQuiz">start quiz</button>
+                <button id="scores">view scores</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="timer">
         <h2 id="minDisplay"></h2>
         <h2 id="secDisplay"></h2>
-        <!-- button to show or hide time (change text color to contrast/match background) -->
         <button id="showHide">hide time</button>
     </div>
     <div class="score"></div>
     <div id="card" class="card">
         <button id="startQuiz">start quiz</button>
         <button id="scores">view scores</button>
-        <!-- this is where questions with answers will be displayed -->
-    </div>
+    </div> -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

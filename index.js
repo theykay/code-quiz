@@ -554,15 +554,16 @@ function initialize() {
 function formatMinutes() {
     let secondsLeft = totalTime - timeElapsed;
     let minutesLeft = Math.floor(secondsLeft / 60);
-    let formattedMinutes;
+    // let formattedMinutes;
 
-    if (minutesLeft < 10) {
-        formattedMinutes = "0" + minutesLeft;
-    } else {
-        formattedMinutes = minutesLeft;
-    }
+    // if (minutesLeft < 10) {
+    //     formattedMinutes = "0" + minutesLeft;
+    // } else {
+    //     formattedMinutes = minutesLeft;
+    // }
 
-    return formattedMinutes;
+    // return formattedMinutes;
+    return minutesLeft;
 };
 
 function formatSeconds() {
