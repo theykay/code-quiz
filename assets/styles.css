@@ -11,10 +11,26 @@ h1 {
     justify-content: center;
 }
 
+.score {
+    text-align: center;
+    text-justify: center;
+}
+
 h2 {
     text-align: center;
 }
 
-p {
+#minText {
     text-align: center;
+}
+
+#secText {
+    text-align: center;
+}
+/* p {
+    text-align: center;
+} */
+#card {
+    display: flex;
+    justify-content: space-around;
 }

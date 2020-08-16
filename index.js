@@ -263,9 +263,11 @@ scoreButton.addEventListener('click', function () {
             scoreNums = scoreNums;
         }
         let scoreList = document.createElement('ul');
+        scoreList.setAttribute('class','list-group-flush');
         document.getElementById('card').appendChild(scoreList);
         for (let r = 0; r < scoreNames.length; r++) {
             let currentScore = document.createElement('li');
+            currentScore.setAttribute('class', 'list-group-item');
             currentScore.textContent = 'Name: ' + scoreNames[r] + " Score: " + scoreNums[r];
             scoreList.appendChild(currentScore);
         }
@@ -320,9 +322,9 @@ document.getElementById('card').addEventListener('click', function (event) {
                 generateContent();
             }
         } else {
-            // strike through
             // lose 5 seconds 
-            event.target.style.textDecoration = 'line-through';
+            // event.target.style.textDecoration = 'line-through';
+            event.target.style.backgroundColor = 'red';
             timeElapsed += 5;
             whichTry++;
         }
@@ -560,16 +562,6 @@ function initialize() {
 function formatMinutes() {
     let secondsLeft = totalTime - timeElapsed;
     let minutesLeft = Math.floor(secondsLeft / 60);
-    
-    // let formattedMinutes;
-
-    // if (minutesLeft < 10) {
-    //     formattedMinutes = "0" + minutesLeft;
-    // } else {
-    //     formattedMinutes = minutesLeft;
-    // }
-
-    // return formattedMinutes;
     return minutesLeft;
 };
 
@@ -661,6 +653,7 @@ function generateContent() {
     for (let m = 0; m < info[randomIndex].answers.length; m++) {
         let option = document.createElement('li');
         option.textContent = info[randomIndex].answers[m];
+        option.setAttribute('class', 'list-group-item');
         answers.appendChild(option);
     };
     // remove question from array
