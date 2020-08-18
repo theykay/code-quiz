@@ -1,5 +1,8 @@
 # Javascript Quiz Application
 
+## Link to site
+[JS quiz link](https://theykay.github.io/javascript-quiz-app/)
+
 ## Description
 
 This is a web app designed to test a user's knowledge of Javascript. When the page loads, they are presented with options to start the quiz or view previous scores. 
